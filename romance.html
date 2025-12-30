@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o Meu Amor - 2026</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Montserrat:wght@200;400&display=swap');
+
+        :root {
+            --deep-red: #4a0404;
+            --bright-red: #8b0000;
+            --gold: #d4af37;
+            --gold-light: #f9e29c;
+            --white: #fff5f5;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: #000;
+            background-image: radial-gradient(circle at center, var(--bright-red) 0%, #050000 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        /* Camada de partículas de "fogo/brasas" */
+        #fireflies {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .card {
+            background: rgba(40, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            width: 90%;
+            max-width: 450px;
+            padding: 50px 30px;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 20px rgba(139, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease;
+        }
+
+        .photo-frame {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 30px;
+            position: relative;
+            padding: 8px;
+            background: linear-gradient(45deg, var(--gold), #5a0000, var(--gold-light));
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--deep-red);
+        }
+
+        .title {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .message {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--white);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            font-weight: 200;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        .message span {
+            color: var(--gold-light);
+            font-weight: 400;
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .timer-box {
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            padding-top: 20px;
+            color: var(--gold-light);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #countdown {
+            display: block;
+            font-size: 1.2rem;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        /* Animação das brasas */
+        .ember {
+            position: absolute;
+            background: var(--gold);
+            border-radius: 50%;
+            filter: blur(1px);
+            animation: rise var(--d) linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-100px) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="fireflies"></div>
+
+    <div class="card" id="card">
+        <div class="photo-frame">
+            <img src="eu.png" alt="Minha chama">
+        </div>
+
+        
+        
+        <p class="message">
+            Dizem que o ano começa em Janeiro, mas meu mundo recomeça toda vez que você me olha. Sou caidinha por você meu gatinho.
+        </p>
+        <h1 class="title">2026 Nos Espera</h1>
+       
+
+        <div class="timer-box">
+            A contagem para o nosso ano:
+            <span id="countdown">00:00:00:00</span>
+        </div>
+    </div>
+
+    <script>
+        // Criar brasas animadas
+        const container = document.getElementById('fireflies');
+        for (let i = 0; i < 40; i++) {
+            const ember = document.createElement('div');
+            ember.className = 'ember';
+            const size = Math.random() * 4;
+            const left = Math.random() * 100;
+            const duration = Math.random() * 5 + 5;
+            const delay = Math.random() * 5;
+            
+            ember.style.width = `${size}px`;
+            ember.style.height = `${size}px`;
+            ember.style.left = `${left}%`;
+            ember.style.setProperty('--d', `${duration}s`);
+            ember.style.animationDelay = `${delay}s`;
+            ember.style.background = Math.random() > 0.5 ? '#ff4d00' : '#d4af37';
+            ember.style.boxShadow = `0 0 10px ${ember.style.background}`;
+            
+            container.appendChild(ember);
+        }
+
+        // Efeito 3D no Card
+        const card = document.getElementById('card');
+        document.addEventListener('mousemove', (e) => {
+            const x = (window.innerWidth / 2 - e.clientX) / 15;
+            const y = (window.innerHeight / 2 - e.clientY) / 15;
+            card.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+        });
+
+        // Countdown
+        function updateCountdown() {
+            const target = new Date("January 1, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('countdown').innerHTML = 
+                `${days}d ${hours}h ${mins}m ${secs}s`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
